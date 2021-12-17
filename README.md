@@ -63,7 +63,7 @@ ct-ng menuconfig
 
 - In the `Paths and misc options` disable "render the toolchain readonly"
 
-- In `Paths and misc options` add the following build compiler flags `-Wno-error=missing-attributes`
+- In `Paths and misc options` add the following build and host compiler flags `-Wno-error=missing-attributes`
 
 - Save the configuration and exit.
 
