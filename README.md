@@ -12,24 +12,14 @@ Note: armv6, armv7, armv8 are 32-bit arm. aarch64 is 64-bit arm. Newer systems a
 | armv7           | Pi 2                                                       |
 | armv8 / aarch64 | Pi 3B, Pi 3B+, Pi 3A+, Pi 4B, Pi Zero 2 W                  |
 
-
-## Host Systems
-
-_Toolchains will be built to run on x86_64 linux, x86_64 windows, and x86_64 macOS. All toolchains will be built on an x86_64 linux system.
-
-| Build               | Host                  |
-| ------------------- | --------------------- |
-| x86_64-linux-gnu    | x86_64-linux-gnu      |
-| x86_64-linux-gnu    | x86_64-w64-mingw32    |
-| x86_64-linux-gnu    | x86_64-apple-darwin19 |
-
-In all cases target will either be `arm-linux-gnueabihf` or `aarch64-linux-gnu`. Depends on the specific configuration used and which Pi's need support. Prebuilt toolchains are built supporting the Pi zero (armv6). No prebuilt toolchains targeting aarch64 are currently provided as ArPiRobot images are currently all 32-bit.
+crosstool-ng has sample configurations for various versions of the Pi. The prebuilt toolchains here are compatible with the Pi zero, therefore are armv6.
 
 ## Requirements
-- x86-64 Linux system to perform the build on. Ideally, this is an older distribution to ensure maximum compatibility with the cross compiler for linux hosts. At time of writing using Ubuntu 14.04 or 16.04 is recommended.
+- Linux (x86_64)
 - Native (x86_64 linux) compiler (gcc)
     - Install from distribution packages
 - Crosstool-ng
+    - Last tested using commit `584e57e888fd652ff6228c1dbdff18556149c7cb`. Tested on Dec 17, 2021
     ```sh
     git clone https://github.com/crosstool-ng/crosstool-ng
     cd crosstool-ng
@@ -52,7 +42,7 @@ In all cases target will either be `arm-linux-gnueabihf` or `aarch64-linux-gnu`.
 
 ## Building for Linux x86_64 Host
  
-- Load predone configuration. Change `armv6-rpi-linux-gnueabi` to something else if desired.
+- Load sample configuration. Change `armv6-rpi-linux-gnueabi` to something else if desired.
 
 ```sh
 mkdir ~/rpi_cross_build
@@ -73,16 +63,9 @@ ct-ng menuconfig
 
 - In the `Paths and misc options` disable "render the toolchain readonly"
 
+- In `Paths and misc options` add the following build compiler flags `-Wno-error=missing-attributes`
+
 - Save the configuration and exit.
-
-- Fix issues with isl download being down (extended duration)
-
-```
-mkdir -p .build/tarballs
-cd .build/tarballs
-wget http://mirror.opencompute.org/onie/crosstool-NG/isl-0.20.tar.xz
-cd ../..
-```
 
 - Start the build. This will take a little while.
 
