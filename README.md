@@ -2,7 +2,7 @@
 
 ## Prebuilt Toolchain Downloads
 
-See the [Releases Page](./releases). 
+See the [Releases Page](https://github.com/ArPiRobot/ArPiRobot-Toolchain/releases). 
 
 Each toolchain is built with the intent of being used with a specific version of the Raspberry Pi OS. This version is not dependent on specific releases, but on the debian version on which it is based (eg. Stretch, Buster, Bullseye). Each toolchain is built with the same version of glibc, binutils, and a similar version of gcc to what is used in the targeted version of Raspberry Pi OS.
 
