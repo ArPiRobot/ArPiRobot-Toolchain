@@ -68,7 +68,7 @@ sudo schroot -c buster
 apt install sudo
 exit
 schroot -c buster
-# You will be in a debian buster chroot environment with access to your home directory. Type exit to exit.
+# You will be in a debian buster chroot environment with access to your home directory.
 ```
 
 ## Crosstool-ng
