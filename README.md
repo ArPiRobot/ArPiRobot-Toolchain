@@ -222,4 +222,75 @@ cp ~/x-tools/HOST-x86_64-w64-mingw32/ArPiRobotToolchain_Buster_Win64.zip .
 
 ## Build Toolchain for macOS x86_64 Host
 
-TODO: Can this be done using osxcross?
+Build osxcross as a cross compiler targeting macOS (x86_64)
+- Build [osxcross](https://github.com/tpoechtrager/osxcross) following the project's instructions
+- Make sure to also build gcc. Build the same version of gcc as the system you are building on uses natively (`gcc --version`).
+- You also need to build binutils (`BINUTILS_VERSION=2.32.1 ./build_binutils`). Once again, best to make the version the same as the version uses on the build system
+- Tested using macOS 10.15 SDK targeting darwin 19. Minimum targeted version of macOS = 10.9
+
+Add osxcross executables to the path
+
+```sh
+export PATH=$PATH:$HOME/osxcross-buster/target/bin:$HOME/osxcross-buster/target/binutils/bin
+
+# Or, if using the schroot method, add the following to ~/.bashrc
+if [ "$SCHROOT_ALIAS_NAME" == "buster" ]; then
+    export PATH=$PATH:~/osxcross-buster/target/bin:$HOME/osxcross-buster/target/binutils/bin
+fi
+```
+
+Configure crosstool-ng using sample configuration as a base.
+
+```sh
+mkdir ~/rpi_crossbuild
+cd ~/rpi_crossbuild
+ct-ng [base_config_name]
+ct-ng menuconfig
+```
+
+Change some settings
+- Paths and misc options:
+    - Disable Render toolchain read-only
+- Target Options:
+    - ~~Floating point = hardware (FPU)~~ This should be done by default if using the `hf` version of the sample configs
+- Toolchain Options:
+    - Toolchain type: Type = Canadian
+    - Build System:
+        - Tuple = x86_64-unknown-linux-gnu
+    - Host System:
+        - Tuple = x86_64-apple-darwin19 (output of `o64-gcc -dumpmachine`)
+        - Tools prefix = x86_64-apple-darwin19- (same as above, but with hyphen at the end)
+- Operating System
+    - Change kernel version to match the minimum kernel version used in the targeted raspios version. For example, raspios buster could have a kernel as old as 4.19 (though usually has a newer kernel). Regardless, 4.19 is used. Targeting older kernels is also acceptable.
+- Binary Utilities
+    - Change version to match version used on target raspios verison (`ld -version`)
+- C-library
+    - Change glibc version to match version used on target raspios version (`ldd --version`)
+- C compiler
+    - Generally, the version of gcc does not matter, however it is usually kept to be the same major version as what is provided as the native compiler for the raspios version targeted (`gcc --version`). You can usually build newer versions of gcc, but it is more likely to run into issues.
+
+Once done, save the configuration (default filename `.config`) and exit.
+
+Build the toolchain. On a laptop with an i5-8250U, 16BG RAM, SATA SSD this took approximately 60 minutes (running Ubuntu 20.04, Debian Buster chroot).
+
+```sh
+ct-ng build.12    # Number is passed to make -j
+```
+
+
+Create archive with toolchain
+
+```sh
+pushd ~/x-tools/
+
+# These paths may need to be changed for different toolchain configurations
+cd HOST-x86_64-apple-darwin19
+rm armv6-rpi-linux-gnueabihf/build.log.bz2
+rm -r armv6-rpi-linux-gnueabihf/armv6-rpi-linux-gnueabihf/debug-root/
+zip -r ArPiRobotToolchain_Buster_MacIntel64.zip armv6-rpi-linux-gnueabihf/
+
+popd
+
+cp ~/x-tools/HOST-x86_64-apple-darwin19/ArPiRobotToolchain_Buster_MacIntel64.zip .
+```
+
