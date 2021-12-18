@@ -136,7 +136,7 @@ Change some settings
 
 Once done, save the configuration (default filename `.config`) and exit.
 
-Build the toolchain. On a laptop with an i5-8250U, 16BG RAM, SATA SSD this took approximately 30 minutes.
+Build the toolchain. On a laptop with an i5-8250U, 16BG RAM, SATA SSD this took approximately 30 minutes (running Ubuntu 20.04, Debian Buster chroot).
 
 ```sh
 ct-ng build.12    # Number is passed to make -j
@@ -182,7 +182,7 @@ Change some settings
 
 Once done, save the configuration (default filename `.config`) and exit.
 
-Build the toolchain. On a laptop with an i5-8250U, 16BG RAM, SATA SSD this took approximately 60 minutes.
+Build the toolchain. On a laptop with an i5-8250U, 16BG RAM, SATA SSD this took approximately 60 minutes (running Ubuntu 20.04, Debian Buster chroot).
 
 ```sh
 ct-ng build.12    # Number is passed to make -j
