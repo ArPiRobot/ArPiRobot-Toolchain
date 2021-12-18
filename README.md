@@ -94,7 +94,7 @@ Download, build and install `crosstool-ng`. Generally, it is best to use the ver
 ```sh
 sudo apt install git build-essential autoconf bison flex  \
     texinfo help2man gawk libtool libtool-bin git \
-    libncurses5-dev wget unzip
+    libncurses5-dev wget unzip zip
 git clone https://github.com/crosstool-ng/crosstool-ng.git
 cd crosstool-ng
 ./bootstrap
@@ -142,6 +142,21 @@ Build the toolchain. On a laptop with an i5-8250U, 16BG RAM, SATA SSD this took 
 ct-ng build.12    # Number is passed to make -j
 ```
 
+Create archive with toolchain
+
+```sh
+pushd ~/x-tools/
+
+# These paths may need to be changed for different toolchain configurations
+rm armv6-rpi-linux-gnueabihf/build.log.bz2
+rm -r armv6-rpi-linux-gnueabihf/armv6-rpi-linux-gnueabihf/debug-root/
+tar -czvf ArPiRobotToolchain_Buster_Linux64.tar.gz armv6-rpi-linux-gnueabihf/
+
+popd
+
+cp ~/x-tools/ArPiRobotToolchain_Buster_Linux64.tar.gz .
+```
+
 ## Build Toolchain for Windows x86_64 Host
 
 Install mingw-w64 package. This provides a cross compiler to generate binaries for 64-bit windows on a 64-bit linux system.
@@ -186,6 +201,22 @@ Build the toolchain. On a laptop with an i5-8250U, 16BG RAM, SATA SSD this took 
 
 ```sh
 ct-ng build.12    # Number is passed to make -j
+```
+
+Create archive with toolchain
+
+```sh
+pushd ~/x-tools/
+
+# These paths may need to be changed for different toolchain configurations
+cd HOST-x86_64-w64-mingw32
+rm armv6-rpi-linux-gnueabihf/build.log.bz2
+rm -r armv6-rpi-linux-gnueabihf/armv6-rpi-linux-gnueabihf/debug-root/
+zip -r ArPiRobotToolchain_Buster_Win64.zip armv6-rpi-linux-gnueabihf/
+
+popd
+
+cp ~/x-tools/HOST-x86_64-w64-mingw32/ArPiRobotToolchain_Buster_Win64.zip .
 ```
 
 
