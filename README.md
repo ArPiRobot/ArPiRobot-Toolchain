@@ -73,7 +73,7 @@ schroot -c buster
 
 ## Crosstool-ng
 
-The cross compilers are built using [crosstool-ng](). Crosstool-ng provides several sample configurations, including ones for each version of the Pi. These are used as a base configuration for the toolchain that will be built.
+The cross compilers are built using [crosstool-ng](https://crosstool-ng.github.io/). Crosstool-ng provides several sample configurations, including ones for each version of the Pi. These are used as a base configuration for the toolchain that will be built.
 
 Base configurations (from samples, `ct-ng list-samples`)
 
@@ -83,8 +83,6 @@ Base configurations (from samples, `ct-ng list-samples`)
 - `armv8-pi4-linux-gnueabihf` for supporting Pi 4 and newer (32-bit)
 - `aarch64-pi3-linux-gnueabihf` for supporting Pi 3 and newer (64-bit)
 - `aarch64-pi4-linux-gnueabihf` for supporting Pi 4 and newer (64-bit)
-
-## Build Requirements
 
 
 ## Setup to Build toolchains
