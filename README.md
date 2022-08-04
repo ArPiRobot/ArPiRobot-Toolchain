@@ -54,7 +54,7 @@ Append to `/etc/schroot/schroot.conf`
 description=Debian 10
 type=directory
 directory=/srv/chroot/buster
-users=marcus
+users=YOUR_USERNAME
 groups=root
 root-groups=root
 ```
