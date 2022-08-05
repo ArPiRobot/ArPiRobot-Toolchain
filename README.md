@@ -194,7 +194,7 @@ pushd ~/x-tools/HOST-x86_64-apple-darwin19
 rm $CONFIG/build.log.bz2
 rm -r $CONFIG/$CONFIG/debug-root/
 cd $CONFIG
-zip -r ../${CONFIG}_macOS_x64.zip .
+zip -r ../../${CONFIG}_macOS_x64.zip .
 popd
 cp ~/x-tools/${CONFIG}_macOS_x64.zip .
 ```
