@@ -4,7 +4,7 @@
 
 See the [Releases Page](https://github.com/ArPiRobot/ArPiRobot-Toolchain/releases). 
 
-Download the correct toolchain for your system. Raspberry Pi's use the `armv6` toolchain. Nvidia Jetson's use the `aarch64` toolchain.
+Download the correct toolchain for your system. Raspberry Pis use the `armv6` toolchain. Nvidia Jetsons use the `aarch64` toolchain.
 
 ## Setup to Build
 
