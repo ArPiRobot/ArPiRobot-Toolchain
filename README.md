@@ -190,7 +190,7 @@ ct-ng build.12    # Number is passed to make -j
 Create archive with toolchain
 
 ```sh
-pushd ~/x-tools/
+pushd ~/x-tools/HOST-x86_64-apple-darwin19
 rm $CONFIG/build.log.bz2
 rm -r $CONFIG/$CONFIG/debug-root/
 cd $CONFIG
