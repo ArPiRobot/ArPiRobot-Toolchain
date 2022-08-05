@@ -140,7 +140,7 @@ cp ~/x-tools/${CONFIG}_Windows_x64.zip .
 Build osxcross as a cross compiler targeting macOS (x86_64)
 - Build [osxcross](https://github.com/tpoechtrager/osxcross) following the project's instructions
 - Make sure to also build gcc. Build the same version of gcc as the system you are building on uses natively (`gcc --version`).
-- You also need to build binutils (`BINUTILS_VERSION=2.32.1 ./build_binutils`). Once again, best to make the version the same as the version uses on the build system
+- You also need to build binutils (`BINUTILS_VERSION=2.31.1 ./build_binutils.sh`). Once again, best to make the version the same as the version uses on the build system
 - Tested using macOS 10.15 SDK targeting darwin 19. Minimum targeted version of macOS = 10.9
 
 Add osxcross executables to the path
