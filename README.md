@@ -43,7 +43,7 @@ ct-ng list-samples
 Configure crosstool-ng using sample configuration as a base.
 
 ```sh
-ct-ng ./[CONFIG_NAME].config
+ct-ng [SAMPLE_NAME]
 ct-ng menuconfig
 ```
 
@@ -92,7 +92,7 @@ sudo apt install mingw-w64
 Configure crosstool-ng using sample configuration as a base.
 
 ```sh
-ct-ng ./[CONFIG_NAME].config
+ct-ng [SAMPLE_NAME]
 ct-ng menuconfig
 ```
 
@@ -157,7 +157,7 @@ fi
 Configure crosstool-ng using sample configuration as a base.
 
 ```sh
-ct-ng ./[CONFIG_NAME].config
+ct-ng [SAMPLE_NAME]
 ct-ng menuconfig
 ```
 
