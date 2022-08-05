@@ -51,12 +51,14 @@ Change some settings
 
 - Paths and misc options:
     - Disable Render toolchain read-only
+- Target Options:
+    - Make sure Floating Point is set to hardware
 - Binary Utilities
-    - Change version to match ones listed above
+    - Change binutils version to match ones listed above
 - C-library
     - Change glibc version to match ones listed above
 - C compiler
-    - Change glibc version to match ones listed above
+    - Change gcc version to match ones listed above
 
 Once done, save the configuration (default filename `.config`) and exit.
 
@@ -73,9 +75,10 @@ pushd ~/x-tools/
 rm $CONFIG/build.log.bz2
 rm -r $CONFIG/$CONFIG/debug-root/
 cd $CONFIG
-tar -czvf ../$CONFIG_Linux_x64.tar.gz $CONFIG/
+tar --xform s:'./':: -czvf ../${CONFIG}_Linux_x64.tar.gz .
+cd ..
 popd
-cp ~/x-tools/$CONFIG_Linux_x64.tar.gz .
+cp ~/x-tools/${CONFIG}_Linux_x64.tar.gz .
 ```
 
 ## Build Toolchain for Windows x86_64 Host
@@ -96,6 +99,8 @@ ct-ng menuconfig
 Change some settings
 - Paths and misc options:
     - Disable Render toolchain read-only
+- Target Options:
+    - Make sure Floating Point is set to hardware
 - Toolchain Options:
     - Toolchain type: Type = Canadian
     - Build System:
@@ -104,11 +109,11 @@ Change some settings
         - Tuple = x86_64-w64-mingw32
         - Tools prefix = x86_64-w64-mingw32-
 - Binary Utilities
-    - Change version to match ones listed above
+    - Change binutils version to match ones listed above
 - C-library
     - Change glibc version to match ones listed above
 - C compiler
-    - Change glibc version to match ones listed above
+    - Change gcc version to match ones listed above
 
 Once done, save the configuration (default filename `.config`) and exit.
 
@@ -119,13 +124,14 @@ ct-ng build.12    # Number is passed to make -j
 Create archive with toolchain
 
 ```sh
-pushd ~/x-tools/
+pushd ~/x-tools/HOST-x86_64-w64-mingw32
 rm $CONFIG/build.log.bz2
 rm -r $CONFIG/$CONFIG/debug-root/
 cd $CONFIG
-tar -czvf ../$CONFIG_Windows_x64.tar.gz $CONFIG/
+zip -r ../../${CONFIG}_Windows_x64.zip .
+cd ../..
 popd
-cp ~/x-tools/$CONFIG_Windows_x64.tar.gz .
+cp ~/x-tools/${CONFIG}_Windows_x64.zip .
 ```
 
 
@@ -158,6 +164,8 @@ ct-ng menuconfig
 Change some settings
 - Paths and misc options:
     - Disable Render toolchain read-only
+- Target Options:
+    - Make sure Floating Point is set to hardware
 - Toolchain Options:
     - Toolchain type: Type = Canadian
     - Build System:
@@ -166,11 +174,11 @@ Change some settings
         - Tuple = x86_64-apple-darwin19 (output of `o64-gcc -dumpmachine`)
         - Tools prefix = x86_64-apple-darwin19- (same as above, but with hyphen at the end)
 - Binary Utilities
-    - Change version to match ones listed above
+    - Change binutils version to match ones listed above
 - C-library
     - Change glibc version to match ones listed above
 - C compiler
-    - Change glibc version to match ones listed above
+    - Change gcc version to match ones listed above
 
 Once done, save the configuration (default filename `.config`) and exit.
 
@@ -186,9 +194,9 @@ pushd ~/x-tools/
 rm $CONFIG/build.log.bz2
 rm -r $CONFIG/$CONFIG/debug-root/
 cd $CONFIG
-tar -czvf ../$CONFIG_Windows_x64.tar.gz $CONFIG/
+zip -r ../${CONFIG}_macOS_x64.zip .
 popd
-cp ~/x-tools/$CONFIG_Windows_x64.tar.gz .
+cp ~/x-tools/${CONFIG}_macOS_x64.zip .
 ```
 
 
