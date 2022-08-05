@@ -1,2 +1,8 @@
 *.zip
 *.tar.gz
+crosstool-ng/
+build/
+.build
+build.log
+.config
+.config*
