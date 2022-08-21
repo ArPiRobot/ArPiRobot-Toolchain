@@ -73,7 +73,6 @@ Create archive with toolchain
 ```sh
 pushd ~/x-tools/
 rm $CONFIG/build.log.bz2
-rm -r $CONFIG/$CONFIG/debug-root/
 cd $CONFIG
 tar --xform s:'./':: -czvf ../${CONFIG}_Linux_x64.tar.gz .
 cd ..
@@ -126,7 +125,6 @@ Create archive with toolchain
 ```sh
 pushd ~/x-tools/HOST-x86_64-w64-mingw32
 rm $CONFIG/build.log.bz2
-rm -r $CONFIG/$CONFIG/debug-root/
 cd $CONFIG
 zip -r ../../${CONFIG}_Windows_x64.zip .
 cd ../..
@@ -192,7 +190,6 @@ Create archive with toolchain
 ```sh
 pushd ~/x-tools/HOST-x86_64-apple-darwin19
 rm $CONFIG/build.log.bz2
-rm -r $CONFIG/$CONFIG/debug-root/
 cd $CONFIG
 zip -r ../../${CONFIG}_macOS_x64.zip .
 popd
