@@ -8,7 +8,7 @@ Download the correct toolchain for your system. Raspberry Pis use the `armv6` to
 
 ## Setup to Build
 
-**Recommended build system:** Debian buster (use VM, container, or chroot)
+**Recommended build system:** Debian buster for armv6 and Ubuntu bionic for aarch64 (use VM, container, or chroot). General recommendation is to use the "same" system to build the toolchains as the "minimum" target. Mostly use a system with same glibc version.
 
 **Install crosstool-ng**
 
