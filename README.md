@@ -4,11 +4,9 @@
 
 See the [Releases Page](https://github.com/ArPiRobot/ArPiRobot-Toolchain/releases). 
 
-Download the correct toolchain for your system. Raspberry Pis use the `armv6` toolchain. Nvidia Jetsons use the `aarch64` toolchain.
-
 ## Setup to Build
 
-**Recommended build system:** Debian buster for armv6 and Ubuntu bionic for aarch64 (use VM, container, or chroot). General recommendation is to use the "same" system to build the toolchains as the "minimum" target. Mostly use a system with same glibc version.
+**Recommended build system:** Same system as minimum target (currently Ubuntu 18.04). Use chroot, vm, container, etc. 
 
 **Install crosstool-ng**
 
@@ -43,6 +41,7 @@ ct-ng list-samples
 Configure crosstool-ng using sample configuration as a base.
 
 ```sh
+rm -rf .build/ .config
 ct-ng [SAMPLE_NAME]
 ct-ng menuconfig
 ```
@@ -91,6 +90,7 @@ sudo apt install mingw-w64
 Configure crosstool-ng using sample configuration as a base.
 
 ```sh
+rm -rf .build/ .config
 ct-ng [SAMPLE_NAME]
 ct-ng menuconfig
 ```
@@ -155,6 +155,7 @@ fi
 Configure crosstool-ng using sample configuration as a base.
 
 ```sh
+rm -rf .build/ .config
 ct-ng [SAMPLE_NAME]
 ct-ng menuconfig
 ```
