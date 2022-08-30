@@ -73,7 +73,7 @@ Create archive with toolchain
 pushd ~/x-tools/
 rm $CONFIG/build.log.bz2
 cd $CONFIG
-tar --xform s:'./':: -czvf ../${CONFIG}_Linux_x64.tar.gz .
+zip -r ../${CONFIG}_Linux_x64.tar.gz .
 cd ..
 popd
 cp ~/x-tools/${CONFIG}_Linux_x64.tar.gz .
