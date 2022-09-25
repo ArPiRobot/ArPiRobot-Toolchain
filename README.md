@@ -200,5 +200,5 @@ cp ~/x-tools/${CONFIG}_macOS_x64.zip .
 
 ## Making Archives Installable w/ Deploy Tool
 
-Add a file `what.txt` to the archive root with the content `toolchain/config` where `config` is the name of the config used to build the toolchain.
+Add a file `what.txt` to the archive root with the content `toolchain/config` where `config` is the name of the config used to build the toolchain. Additionally, a `version.txt` file should contain the revision name / number (eg `rev0`). This will be displayed by the deploy tool.
 
