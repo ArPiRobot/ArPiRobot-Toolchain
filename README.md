@@ -6,7 +6,7 @@ See the [Releases Page](https://github.com/ArPiRobot/ArPiRobot-Toolchain/release
 
 ## Setup to Build
 
-**Recommended build system:** Same system as minimum target (currently Ubuntu 18.04). Use chroot, vm, container, etc. 
+**Recommended build system:** Ubuntu Bionic (18.04). Use chroot, vm, container, etc. 
 
 **Install crosstool-ng**
 
@@ -20,8 +20,9 @@ Download, build and install `crosstool-ng`. Generally, it is best to use the ver
 sudo apt install git build-essential autoconf bison flex  \
     texinfo help2man gawk libtool libtool-bin git \
     libncurses5-dev wget unzip zip
-git clone https://github.com/crosstool-ng/crosstool-ng.git
-cd crosstool-ng
+wget https://github.com/crosstool-ng/crosstool-ng/releases/download/crosstool-ng-1.24.0/crosstool-ng-1.24.0.tar.bz2
+tar --extract --bzip2 -f crosstool-ng-1.24.0.tar.bz2
+cd crosstool-ng-1.24.0
 cp -r ../samples/* ./samples/
 ./bootstrap
 ./configure --prefix=/usr/local
