@@ -3,6 +3,7 @@
 import os
 import subprocess
 import sys
+import platform
 
 
 def input_int(prompt: str, lower: int, upper: int) -> int:
@@ -15,6 +16,7 @@ def input_int(prompt: str, lower: int, upper: int) -> int:
             raise e
         except ValueError:
             pass
+
 
 def input_yn(prompt: str, default: str) -> bool:
     yn_string = ""
@@ -61,6 +63,10 @@ if __name__ == "__main__":
                 hosts.append(f)
         hosts.sort()
 
+        if platform.system() != "Linux":
+            print("ERROR: Only building on linux is supported!")
+            exit(1)
+
         print("================================================================================")
         print("Targets")
         print("================================================================================")
@@ -88,21 +94,21 @@ if __name__ == "__main__":
         print("================================================================================")
         print()
 
-        mc = input_yn("Run menuconfig", "")
-        print()
-        if mc:
-            print("================================================================================")
-            print("ct-ng menuconfig")
-            print("================================================================================")
-            try:
-                p = subprocess.Popen(["ct-ng", "menuconfig"], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, bufsize=0)
-                if p.wait() != 0:
-                    print("ct-ng menuconfig exited with non-zero return code.")
-                    exi
-            except FileNotFoundError:
-                print("ct-ng not found!")
+        print("================================================================================")
+        print("ct-ng menuconfig")
+        print("================================================================================")
+        print("Press enter to run ct-ng menuconfig.")
+        print("Save as '.config' and exit.")
+        input()
+        try:
+            p = subprocess.Popen(["ct-ng", "menuconfig"], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, bufsize=0)
+            if p.wait() != 0:
+                print("ct-ng menuconfig exited with non-zero return code.")
                 exit(1)
-            print("================================================================================")
+        except FileNotFoundError:
+            print("ct-ng not found!")
+            exit(1)
+        print("================================================================================")
     except KeyboardInterrupt:
         exit(1)
 
