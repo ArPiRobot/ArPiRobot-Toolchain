@@ -86,7 +86,6 @@ if __name__ == "__main__":
         print("================================================================================")
         print()
 
-
         print("================================================================================")
         print("Selected Configuration:")
         print("================================================================================")
@@ -113,6 +112,21 @@ if __name__ == "__main__":
             cf.write(os.linesep)
             cf.write("# CT_PREFIX_DIR_RO is not set")
             cf.write(os.linesep)
+        
+        # Modify macos host configs to use correct tuple
+        if sel_host.lower().startswith("macos"):
+            real_tuple = "x86_64-apple-darwin"
+            try:
+                p = subprocess.Popen(["o64-gcc", "-dumpmachine"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                if p.wait() == 0:
+                    real_tuple = p.stdout.readline().strip().decode()
+            except:
+                pass
+            contents = ""
+            with open(os.path.join(script_dir, ".config"), 'r') as f:
+                contents = f.read()
+            contents.replace("x86_64-apple-darwin", real_tuple)
+        
 
         print("================================================================================")
         print("ct-ng menuconfig")
