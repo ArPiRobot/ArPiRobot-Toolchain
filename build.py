@@ -4,7 +4,7 @@ import os
 import subprocess
 import sys
 import platform
-import shutil
+import fileinput
 
 
 def input_int(prompt: str, lower: int, upper: int) -> int:
@@ -127,6 +127,25 @@ if __name__ == "__main__":
                 exit(1)
         except FileNotFoundError:
             print("ct-ng not found!")
+            exit(1)
+        print("================================================================================")
+        print()
+
+        print("================================================================================")
+        print("Patch download mirrors for components that have moved.")
+        print("================================================================================")
+        try:
+            with fileinput.FileInput(os.path.join(script_dir, ".config"), inplace=True, backup='.bak') as file:
+                for line in file:
+                    if line.startswith("CT_ISL_MIRRORS"):
+                        print("CT_ISL_MIRRORS=\"https://libisl.sourceforge.io\"")
+                    elif line.startswith("CT_EXPAT_MIRRORS"):
+                        print("CT_EXPAT_MIRRORS=\"https://github.com/libexpat/libexpat/releases/download/R_2_2_6\"")
+                    else:
+                        print(line, end='')
+                print("Patched.")
+        except:
+            print("Patching mirrors failed!")
             exit(1)
         print("================================================================================")
         print()
