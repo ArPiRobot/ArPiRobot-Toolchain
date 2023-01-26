@@ -223,17 +223,19 @@ if __name__ == "__main__":
             f.write(ver)
 
         # Remove build log (large file)
-        if os.path.exists(os.path.join(toolchain_dir, target_tuple, "build.log.bz2")):
+        if os.path.exists(os.path.join(toolchain_dir, "build.log.bz2")):
             os.remove(os.path.join(toolchain_dir, target_tuple, "build.log.bz2"))
 
         # Make zip file
         host_name = sel_host[:-7]
         old_wd = os.curdir
         os.chdir(toolchain_dir)
+        if not os.path.exists(os.path.join(script_dir, "build")):
+            os.mkdir(os.path.join(script_dir, "build"))
         try:
             zip_name = "ArPiRobot-Toolchain-{}-{}.zip".format(target_name, host_name)
             print(" ".join(["zip", os.path.join(script_dir, zip_name), "-r", "."]))
-            p = subprocess.Popen(["zip", os.path.join(script_dir, zip_name), "-r", "."], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, bufsize=0)
+            p = subprocess.Popen(["zip", os.path.join(script_dir, "build", zip_name), "-r", "."], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, bufsize=0)
             if p.wait() != 0:
                 print("zip exited with non-zero return code.")
                 exit(1)
