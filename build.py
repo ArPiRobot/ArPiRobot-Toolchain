@@ -115,17 +115,22 @@ if __name__ == "__main__":
         
         # Modify macos host configs to use correct tuple
         if sel_host.lower().startswith("macos"):
-            real_tuple = "x86_64-apple-darwin"
+            real_tuple = "INVALID"
             try:
                 p = subprocess.Popen(["o64-gcc", "-dumpmachine"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 if p.wait() == 0:
                     real_tuple = p.stdout.readline().strip().decode()
+                else:
+                    print("Failed to get macos tuple. Make sure cross compiler o64-gcc is in the path and works.")
+                    exit(1)
             except:
                 pass
             contents = ""
             with open(os.path.join(script_dir, ".config"), 'r') as f:
                 contents = f.read()
-            contents.replace("x86_64-apple-darwin", real_tuple)
+            contents = contents.replace("x86_64-apple-darwin", real_tuple)
+            with open(os.path.join(script_dir, ".config"), 'w') as f:
+                f.write(contents)
         
 
         print("================================================================================")
