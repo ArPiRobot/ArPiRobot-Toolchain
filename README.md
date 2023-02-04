@@ -44,10 +44,9 @@ sudo add-apt-repository multiverse
 sudo apt install git build-essential autoconf bison flex  \
     texinfo help2man gawk libtool libtool-bin git \
     libncurses5-dev wget unzip zip
-wget https://github.com/crosstool-ng/crosstool-ng/releases/download/crosstool-ng-1.24.0/crosstool-ng-1.24.0.tar.bz2
-tar --extract --bzip2 -f crosstool-ng-1.24.0.tar.bz2
-cd crosstool-ng-1.24.0
-./bootstrap
+wget https://github.com/crosstool-ng/crosstool-ng/releases/download/crosstool-ng-1.25.0/crosstool-ng-1.25.0.tar.bz2
+tar --extract --bzip2 -f crosstool-ng-1.25.0.tar.bz2
+cd crosstool-ng-1.25.0
 ./configure --prefix=/usr/local
 make -j
 sudo make install

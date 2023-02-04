@@ -5,6 +5,7 @@ import subprocess
 import sys
 import platform
 import fileinput
+import shutil
 
 
 def input_int(prompt: str, lower: int, upper: int) -> int:
@@ -113,11 +114,12 @@ if __name__ == "__main__":
             cf.write("# CT_PREFIX_DIR_RO is not set")
             cf.write(os.linesep)
         
-        # Modify macos host configs to use correct tuple
+        # Fixes for building macos hosted toolchain
         if sel_host.lower().startswith("macos"):
+            # Modify macos host configs to use correct tuple
             real_tuple = "INVALID"
             try:
-                p = subprocess.Popen(["o64-gcc", "-dumpmachine"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                p = subprocess.Popen(["o64-gcc", "-dumpmachine"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=os.environ)
                 if p.wait() == 0:
                     real_tuple = p.stdout.readline().strip().decode()
                 else:
@@ -131,7 +133,6 @@ if __name__ == "__main__":
             contents = contents.replace("x86_64-apple-darwin", real_tuple)
             with open(os.path.join(script_dir, ".config"), 'w') as f:
                 f.write(contents)
-        
 
         print("================================================================================")
         print("ct-ng menuconfig")
@@ -140,7 +141,7 @@ if __name__ == "__main__":
         print("Then, save as '.config' and exit.")
         input()
         try:
-            p = subprocess.Popen(["ct-ng", "menuconfig"], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, bufsize=0)
+            p = subprocess.Popen(["ct-ng", "menuconfig"], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, bufsize=0, env=os.environ)
             if p.wait() != 0:
                 print("ct-ng menuconfig exited with non-zero return code.")
                 exit(1)
@@ -156,10 +157,8 @@ if __name__ == "__main__":
         try:
             with fileinput.FileInput(os.path.join(script_dir, ".config"), inplace=True, backup='.bak') as file:
                 for line in file:
-                    if line.startswith("CT_ISL_MIRRORS"):
-                        print("CT_ISL_MIRRORS=\"https://libisl.sourceforge.io\"")
-                    elif line.startswith("CT_EXPAT_MIRRORS"):
-                        print("CT_EXPAT_MIRRORS=\"https://github.com/libexpat/libexpat/releases/download/R_2_2_6\"")
+                    if line.startswith("CT_ZLIB_MIRRORS"):
+                        print(line.rstrip()[:-1] + " https://www.zlib.net/fossils\"")
                     else:
                         print(line, end='')
                 print("Patched.")
@@ -174,7 +173,7 @@ if __name__ == "__main__":
         print("================================================================================")
         ncores = input_int("Build threads: ", 1, 999999)
         try:
-            p = subprocess.Popen(["ct-ng", "build.{}".format(ncores)], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, bufsize=0)
+            p = subprocess.Popen(["ct-ng", "build.{}".format(ncores)], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, bufsize=0, env=os.environ)
             if p.wait() != 0:
                 print("ct-ng build exited with non-zero return code.")
                 exit(1)
@@ -200,7 +199,7 @@ if __name__ == "__main__":
         # Get toolchain target tuple
         target_tuple = ""
         try:
-            p = subprocess.Popen(["ct-ng", "show-tuple"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            p = subprocess.Popen(["ct-ng", "show-tuple"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=os.environ)
             if p.wait() != 0:
                 print("ct-ng show-tuple exited with non-zero return code.")
                 exit(1)
@@ -229,18 +228,18 @@ if __name__ == "__main__":
 
         # Remove build log (large file)
         if os.path.exists(os.path.join(toolchain_dir, "build.log.bz2")):
-            os.remove(os.path.join(toolchain_dir, target_tuple, "build.log.bz2"))
+            os.remove(os.path.join(toolchain_dir, "build.log.bz2"))
 
         # Make zip file
         host_name = sel_host[:-7]
         old_wd = os.curdir
         os.chdir(toolchain_dir)
-        if not os.path.exists(os.path.join(script_dir, "build")):
-            os.mkdir(os.path.join(script_dir, "build"))
+        if not os.path.exists(os.path.join(script_dir, "zips")):
+            os.mkdir(os.path.join(script_dir, "zips"))
         try:
             zip_name = "ArPiRobot-Toolchain-{}-{}.zip".format(target_name, host_name)
             print(" ".join(["zip", os.path.join(script_dir, zip_name), "-r", "."]))
-            p = subprocess.Popen(["zip", os.path.join(script_dir, "build", zip_name), "-r", "."], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, bufsize=0)
+            p = subprocess.Popen(["zip", os.path.join(script_dir, "zips", zip_name), "-r", "."], stdin=sys.stdin, stdout=sys.stdout, stderr=sys.stderr, bufsize=0, env=os.environ)
             if p.wait() != 0:
                 print("zip exited with non-zero return code.")
                 exit(1)
