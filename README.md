@@ -14,17 +14,17 @@ It is **highly** recommended to build on an older Linux system (older glibc) so 
 
 ```sh
 sudo apt install debootstrap schroot
-sudo debootstrap --arch=amd64 bionic bionic/
+sudo debootstrap --arch=amd64 bionic /srv/chroot/bionic/
 ```
 
-Then add the following to `/etc/schroot/chroot.d/bionic.conf`. Change USERNAME as needed.
+Then add the following to `/etc/schroot/chroot.d/bionic.conf`. Change `[USERNAME]` as needed.
 
 ```
 [bionic]
 description=Ubuntu 18.04 (bionic)
 type=directory
 directory=/srv/chroot/bionic
-users=marcus
+users=[USERNAME]
 root-groups=root
 profile=desktop
 personality=linux
