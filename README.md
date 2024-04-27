@@ -1,3 +1,8 @@
+# Archived
+
+Future releases will use LLVM's clang and lld to build. As these are natively cross compiler / linker tools, custom toolchain builds are no longer necessary
+
+
 # ArPiRobot-Toolchain
 
 
